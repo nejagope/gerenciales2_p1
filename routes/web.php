@@ -17,4 +17,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')->group(function(){
+	Route::get('/home', 'HomeController@index')->name('home');
+
+	//administración
+	//Categorías de productos
+	Route::get('/admin/categories/create', 'CategoriesController@create')->name('categories_create');
+	Route::post('/admin/categories/store', 'CategoriesController@store')->name('categories_store');
+	Route::post('/admin/categories/{category}/delete', 'CategoriesController@delete')->name('categories_delete');
+	Route::get('/admin/categories', 'CategoriesController@index')->name('categories_index');
+	
+	//productos
+	Route::get('/admin/products/create', 'ProductsController@create')->name('products_create');
+	Route::post('/admin/products/store', 'ProductsController@store')->name('products_store');
+	Route::post('/admin/products/{product}/delete', 'ProductsController@delete')->name('products_delete');
+	Route::get('/admin/products', 'ProductsController@index')->name('products_index');
+});	
