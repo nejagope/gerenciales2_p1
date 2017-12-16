@@ -82,10 +82,10 @@
 			<div class="row">
 				@guest
 				@else
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<ul class="list-group">
 						
-							<li class="list-group-item">
+							<li class="list-group-item list-group-item-info">
 								<a href="{{route('home')}}"> 									
 									<h4> 
 										<span class="glyphicon glyphicon-home"></span> 
@@ -94,7 +94,7 @@
 								</a>
 							</li>
 
-							<li class="list-group-item">
+							<li class="list-group-item list-group-item-info">
 								<a href="{{route('categories_index')}}"> 									
 									<h4> 
 										<span class="glyphicon glyphicon-list-alt"></span> 
@@ -104,7 +104,7 @@
 								</a>
 							</li>
 							
-							<li class="list-group-item">
+							<li class="list-group-item list-group-item-info">
 								<a href="{{route('products_index')}}"> 									
 									<h4> 
 										<span class="glyphicon glyphicon-barcode"></span> 
@@ -114,11 +114,21 @@
 								</a>
 							</li>
 							
-							<li class="list-group-item">
+							<li class="list-group-item list-group-item-info">
 								<a href="{{route('reasons_index')}}"> 									
 									<h4> 
 										<span class="glyphicon glyphicon-repeat"></span> 
 										Motivos de devolucición
+									</h4>
+									
+								</a>
+							</li>
+							
+							<li class="list-group-item list-group-item-info">
+								<a href="{{route('questions_index')}}"> 									
+									<h4> 
+										<span class="glyphicon glyphicon-question-sign"></span> 
+										Preguntas para Encuestas
 									</h4>
 									
 								</a>
@@ -128,7 +138,7 @@
 					</div>
 				@endguest
 
-				<div class="col-md-10">				
+				<div class="col-md-9">				
 					@yield('content')
 				</div>
 							

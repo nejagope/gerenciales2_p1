@@ -38,4 +38,10 @@ Route::middleware('auth')->group(function(){
 	Route::post('/admin/reasons/store', 'ReasonsController@store')->name('reasons_store');
 	Route::post('/admin/reasons/{reason}/delete', 'ReasonsController@destroy')->name('reasons_delete');
 	Route::get('/admin/reasons', 'ReasonsController@index')->name('reasons_index');
+	
+	//preguntas
+	Route::get('/admin/questions/create', 'QuestionsController@create')->name('questions_create');
+	Route::post('/admin/questions/store', 'QuestionsController@store')->name('questions_store');
+	Route::post('/admin/questions/{question}/delete', 'QuestionsController@destroy')->name('questions_delete');
+	Route::get('/admin/questions', 'QuestionsController@index')->name('questions_index');
 });	
