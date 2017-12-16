@@ -113,6 +113,16 @@
 									
 								</a>
 							</li>
+							
+							<li class="list-group-item">
+								<a href="{{route('reasons_index')}}"> 									
+									<h4> 
+										<span class="glyphicon glyphicon-repeat"></span> 
+										Motivos de devolucición
+									</h4>
+									
+								</a>
+							</li>
 											  
 						</ul>
 					</div>
