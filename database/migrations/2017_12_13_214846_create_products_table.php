@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
 			$table->string('name');	
 			$table->string('image_url')->nullable();	
 			$table->decimal('price', 8, 2)->nullable();
-			
+			$table->mediumText('description')->nullable();
 			//foreign keys
 			$table->integer('category_id')->unsigned()->nullable();
         });

@@ -18,11 +18,17 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<style>
+		body{
+			background: #0B4C5F;
+		}
+	</style>
 </head>
 <body>
     <div id="app">
 		
-		<nav class="navbar navbar-default navbar-static-top">
+		<nav class="navbar navbar-inverse navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
 
@@ -37,7 +43,7 @@
 					<!-- Branding Image -->
 					<a class="navbar-brand" href="{{ url('/') }}">
 						{{ config('app.name', 'Laravel') }}
-					</a>
+					</a>					
 				</div>
 
 				<div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -84,6 +90,11 @@
 				@else
 					<div class="col-md-3">
 						<ul class="list-group">
+						
+							<li class="list-group-item list-group-item-info">
+								<img src="{{ asset('images/logo-tienda.png') }}" alt="fiusac" style="opacity:0.9;" width="240" heigth="175">
+							</li>
+
 						
 							<li class="list-group-item list-group-item-info">
 								<a href="{{route('home')}}"> 									

@@ -15,7 +15,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
         return view('products.index', ['products' => $products]);
     }
 
@@ -55,7 +55,8 @@ class ProductsController extends Controller
 		$product->name = $request->input('name');
 		$product->price = floatval($request->input('price'));
 		$product->image_url = $request->input('image_url');
-		
+		$product->description = $request->input('description');
+				
 		$product->save();
 		if ($request->input('category')){
 			$category = Category::find($request->input('category'));

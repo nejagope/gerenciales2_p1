@@ -26,6 +26,7 @@
 				</div>
 			</div>
 			
+			
 			<div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">							
 				<label for="price" class="col-md-4 control-label">Precio</label>
 				<div class="col-md-6">
@@ -47,6 +48,19 @@
 					@if ($errors->has('image_url'))
 						<span class="help-block">
 							<strong>{{ $errors->first('image_url') }}</strong>
+						</span>
+					@endif
+				</div>
+			</div>
+			
+			<div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">							
+				<label for="description" class="col-md-4 control-label">Descripción</label>
+				<div class="col-md-6">
+					<input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" required>
+
+					@if ($errors->has('description'))
+						<span class="help-block">
+							<strong>{{ $errors->first('description') }}</strong>
 						</span>
 					@endif
 				</div>

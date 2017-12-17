@@ -89,6 +89,13 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+				
+				<div>
+					<strong>
+						<p>Administrador: Usuario: admin@admin.com - Contraseña: admin</p>
+						<p>Clientes: Usuario: consultar correo en tabla usuarios - Contraseña: 12345</p>
+					</strong>
+				</div>
             </div>
         </div>
     </body>
