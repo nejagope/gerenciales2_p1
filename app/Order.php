@@ -18,6 +18,21 @@ class Order extends Model
 	
 	public function shippings()
 	{
-	  return $this->hasMany('App\Order');
+	  return $this->hasMany('App\Shipping');
+	}
+	
+	public function devolutions()
+	{
+	  return $this->hasMany('App\Devolution');
+	}
+	
+	public function gifts()
+	{
+	  return $this->belongsToMany('App\Gift');
+	}
+	
+	public function receptions()
+	{
+	  return $this->hasMany('App\Reception');
 	}
 }
