@@ -104,16 +104,6 @@
 									</h4>							
 								</a>
 							</li>
-
-							<li class="list-group-item list-group-item-info">
-								<a href="{{route('categories_index')}}"> 									
-									<h4> 
-										<span class="glyphicon glyphicon-list-alt"></span> 
-										Categorías de Productos
-									</h4>
-									
-								</a>
-							</li>
 							
 							<li class="list-group-item list-group-item-info">
 								<a href="{{route('products_index')}}"> 									
@@ -125,25 +115,48 @@
 								</a>
 							</li>
 							
-							<li class="list-group-item list-group-item-info">
-								<a href="{{route('reasons_index')}}"> 									
-									<h4> 
-										<span class="glyphicon glyphicon-repeat"></span> 
-										Motivos de devolucición
+							@if (!Auth::user()->is_admin)
+								<li class="list-group-item list-group-item-info">
+									<h4>
+									<a href="{{route('products_shopping_cart')}}">Mi carrito <span class="glyphicon glyphicon-shopping-cart"><span class="badge" id="carritoSize">{{sizeof(Session::get('order', []))}}</span></span></a>
 									</h4>
-									
-								</a>
-							</li>
+								</li>
+							@endif
+						
 							
-							<li class="list-group-item list-group-item-info">
-								<a href="{{route('questions_index')}}"> 									
-									<h4> 
-										<span class="glyphicon glyphicon-question-sign"></span> 
-										Preguntas para Encuestas
-									</h4>
-									
-								</a>
-							</li>
+							@if (Auth::user()->is_admin)
+								<li class="list-group-item list-group-item-info">
+									<a href="{{route('categories_index')}}"> 									
+										<h4> 
+											<span class="glyphicon glyphicon-list-alt"></span> 
+											Categorías de Productos
+										</h4>
+										
+									</a>
+								</li>
+							
+							
+							
+								<li class="list-group-item list-group-item-info">
+									<a href="{{route('reasons_index')}}"> 									
+										<h4> 
+											<span class="glyphicon glyphicon-repeat"></span> 
+											Motivos de devolucición
+										</h4>
+										
+									</a>
+								</li>
+								
+								<li class="list-group-item list-group-item-info">
+									<a href="{{route('questions_index')}}"> 									
+										<h4> 
+											<span class="glyphicon glyphicon-question-sign"></span> 
+											Preguntas para Encuestas
+										</h4>
+										
+									</a>
+								</li>
+							@endif
 											  
 						</ul>
 					</div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use App\Order;
+use Auth;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -13,10 +15,17 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = Product::paginate(10);
-        return view('products.index', ['products' => $products]);
+		if ($request->category)
+			$products = Product::where('category_id', $request->category)->paginate(10);
+		
+		$categories = Category::all();
+		$parameters = ['products' => $products, 'categories' => $categories];
+		if ($request->category)
+			$parameters['category_selected'] = Category::find($request->category);
+        return view('products.index', $parameters);
     }
 
     /**
@@ -111,4 +120,74 @@ class ProductsController extends Controller
         $product->delete();
 		return redirect()->route('products_index');
     }
+	
+	public function addProductToOrder(Request $request){		
+		if (!$request->session()->has('order')) { 	
+			$orden = array();
+			$request->session()->put('order', $orden);
+		}
+		$request->session()->push('order', $request->product);
+		
+		//dd( $request->session()->pull('order'));
+		return ( sizeof($request->session()->get('order')) );
+		//return "si";
+	}
+	
+	public function shoppingCart(Request $request){
+		$order = $request->session()->get('order');	
+		if ($order){
+			$products = Product::find($order);
+			$cantidades = [];
+			if ($products)
+				$cantidades = array_count_values($order);
+			$totalCompra = 0;
+			foreach($products as $product)
+				$totalCompra += $product->price * $cantidades[$product->id];
+			
+			return view('products.shopping_cart', 
+				[
+					'products' => $products,
+					'cantidades' => $cantidades,
+					'totalCompra' => $totalCompra,
+				]);
+		}
+		return view('products.shopping_cart', 
+				[
+					'products' => [],
+					'cantidades' => [],
+					'totalCompra' => 0,
+				]);
+	}
+	
+	public function removeFromOrder(Request $request){
+		$product = $request->product;
+		
+		$order = $request->session()->pull('order');
+		$orden = array();
+		$request->session()->put('order', $orden);
+		foreach($order as $_product){
+			if ($product != $_product)
+				$request->session()->push('order', $_product);
+		}
+		
+		return redirect()->route('products_shopping_cart');
+	}
+	
+	public function createOrder(Request $request){
+		$order = $request->session()->pull('order');		
+		$products = Product::find($order);		
+		$cantidades = array_count_values($order);
+		
+		$user = Auth::user();
+		
+		$order = new Order;
+		$order->in_process = false;		
+		if ($products->count() > 0){			
+			$user->orders()->save($order);
+		}
+		foreach($products as $product){
+			$order->products()->attach($product, ['amount' => $cantidades[$product->id]]);			
+		}		
+		return redirect()->route('products_shopping_cart');
+	}
 }

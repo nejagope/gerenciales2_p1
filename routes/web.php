@@ -44,4 +44,11 @@ Route::middleware('auth')->group(function(){
 	Route::post('/admin/questions/store', 'QuestionsController@store')->name('questions_store');
 	Route::post('/admin/questions/{question}/delete', 'QuestionsController@destroy')->name('questions_delete');
 	Route::get('/admin/questions', 'QuestionsController@index')->name('questions_index');
+	
+	//clientes
+	Route::get('/add-to-order/', 'ProductsController@addProductToOrder')->name('products_add_to_order');
+	Route::post('/my-shopping-cart/remove/{product}', 'ProductsController@removeFromOrder')->name('products_remove_from_order');
+	Route::post('/my-shopping-cart/confirm', 'ProductsController@createOrder')->name('products_create_order');
+	Route::get('/my-shopping-cart/', 'ProductsController@shoppingCart')->name('products_shopping_cart');
+	
 });	
