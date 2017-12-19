@@ -156,6 +156,16 @@
 										
 									</a>
 								</li>
+								
+								<li class="list-group-item list-group-item-info">
+									<a href="{{route('reports_index')}}"> 									
+										<h4> 
+											<span class="glyphicon glyphicon-stats"></span> 
+											Reportes
+										</h4>
+										
+									</a>
+								</li>
 							@endif
 											  
 						</ul>
