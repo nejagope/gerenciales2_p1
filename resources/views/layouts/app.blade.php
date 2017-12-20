@@ -121,6 +121,16 @@
 									<a href="{{route('products_shopping_cart')}}">Mi carrito <span class="glyphicon glyphicon-shopping-cart"><span class="badge" id="carritoSize">{{sizeof(Session::get('order', []))}}</span></span></a>
 									</h4>
 								</li>
+								
+								<li class="list-group-item list-group-item-info">
+									<a href="{{route('questions_index')}}"> 									
+										<h4> 
+											<span class="glyphicon glyphicon-question-sign"></span> 
+											Encuesta
+										</h4>
+										
+									</a>
+								</li>
 							@endif
 						
 							

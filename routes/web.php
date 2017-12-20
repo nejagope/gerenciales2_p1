@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function(){
 	Route::post('/admin/questions/{question}/delete', 'QuestionsController@destroy')->name('questions_delete');
 	Route::get('/admin/questions', 'QuestionsController@index')->name('questions_index');
 	
+	//respuestas
+	Route::get('/answers/create', 'AnswersController@store')->name('answers_store');
+	
 	//reportes
 	Route::get('/admin/reports/years', 'ReportsController@index')->name('reports_index');
 	
@@ -54,4 +57,5 @@ Route::middleware('auth')->group(function(){
 	Route::post('/my-shopping-cart/confirm', 'ProductsController@createOrder')->name('products_create_order');
 	Route::get('/my-shopping-cart/', 'ProductsController@shoppingCart')->name('products_shopping_cart');
 	
+
 });	
