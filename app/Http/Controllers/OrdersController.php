@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\Shipping;
 use App\Devolution;
+use App\Reason;
 use Auth;
 
 class OrdersController extends Controller
@@ -19,7 +20,7 @@ class OrdersController extends Controller
 	}
 	
 	 public function view(Request $request){		 
-		$order = Order::with('products')->with('devolutions')->find($request->order);
+		$order = Order::with('products')->with('gifts')->with('devolutions')->find($request->order);
 		
 		$products = $order->products;
 		$totalCompra = 0;
@@ -37,8 +38,9 @@ class OrdersController extends Controller
 			'order' => $order,
 			'discount' => 0];
 			
-		if ($order->gifts->first()){
-			$params['discount'] = $totalCompra * $gift->discount;
+		$gift = $order->gifts->first();
+		if ($gift){
+			$params['discount'] = round($totalCompra * $gift->discount, 2);
 		}
 		return view('orders.view', $params);
 	}

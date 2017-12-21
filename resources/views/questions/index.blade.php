@@ -38,7 +38,7 @@
 	<div class="panel-heading">    
 		@if (!Auth::user()->is_admin)				
 			<h4>Ayúdanos a mejorar nuestro servicio</h4>
-			<p>Tu opinión es muy impotante</p>
+			<p>Tu opinión es muy impotante. Selecciona la emoción que tienes ante cada pregunta. No es obligatorio responder todas.</p>
 		@endif	
 		@if (Auth::user()->is_admin)	
 			<h2> Preguntas para encuestas</h2>
@@ -51,7 +51,30 @@
 												   
 				<tr id="td{{$question->id}}">
 					<td >						
-						<label>{{ $question->question }}</label>
+						<label>{{$loop->iteration}} - {{ $question->question }}</label>
+						
+						<div>
+							@if (!Auth::user()->is_admin)
+						
+								<button id="btnScore1-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 1)">
+									<img src="{{asset('images/1.png')}}" width="48" height="48">
+								</button>
+								<button id="btnScore2-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 2)">
+									<img src="{{asset('images/2.png')}}" width="48" height="48">
+								</button>
+								<button id="btnScore3-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 3)">
+									<img src="{{asset('images/3.png')}}" width="48" height="48">
+								</button>
+								<button id="btnScore4-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 4)">
+									<img src="{{asset('images/4.png')}}" width="48" height="48">
+								</button>
+								<button id="btnScore5-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 5)">
+									<img src="{{asset('images/5.png')}}" width="48" height="48">
+								</button>
+								<br>
+							@endif	
+							
+						</div>
 					</td>											
 					
 					
@@ -63,25 +86,7 @@
 						</form>                                        
 					</td>
 					@endif	
-					@if (!Auth::user()->is_admin)
-						<td>
-							<button id="btnScore1-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 1)">
-								<img src="{{asset('images/1.png')}}" width="48" height="48">
-							</button>
-							<button id="btnScore2-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 2)">
-								<img src="{{asset('images/2.png')}}" width="48" height="48">
-							</button>
-							<button id="btnScore3-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 3)">
-								<img src="{{asset('images/3.png')}}" width="48" height="48">
-							</button>
-							<button id="btnScore4-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 4)">
-								<img src="{{asset('images/4.png')}}" width="48" height="48">
-							</button>
-							<button id="btnScore5-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 5)">
-								<img src="{{asset('images/5.png')}}" width="48" height="48">
-							</button>
-						</td>
-					@endif	
+					
 				</tr>
 										
 			@endforeach                            

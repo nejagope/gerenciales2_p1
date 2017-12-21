@@ -75,6 +75,10 @@
 			<tr>
 				<td> <label> Total descuento: ${{$discount}} </label> </td>
 			</td>
+			
+			<tr>
+				<td> <label> Gran Total: ${{$totalCompra - $discount}} </label> </td>
+			</td>
 		</table>
 					  
 	</div>

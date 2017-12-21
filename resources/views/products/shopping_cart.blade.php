@@ -51,11 +51,39 @@
 			@endforeach                            
 		</table>
 			
-		
+		<script>
+			function aplicarDescuento(){
+				try{					
+					var total = $("#lblTotal").text();
+					descuento = $("#gift").text().split(' ')[6];
+					
+					if (isNaN(descuento))
+						return;
+					descuento = Math.round(total * descuento) /100;
+					var granTotal = Math.round((total - descuento) * 100)/100 ;
+					$("#lblGranTotal").text(granTotal);
+					$("#lblDescuento").text(descuento);
+					descuento = null;
+				}catch(ex){
+					$("#lblGranTotal").text($("#lblTotal").text());
+					$("#lblDescuento").text(0);
+				}
+			}
+		</script>
 		<table>
 			<tr>
-				<td> <label> Total compra: ${{$totalCompra}} </label> </td>
+				<td><label>Total compra: $</label> <label id="lblTotal">{{$totalCompra}}</label> </td>
 			</tr>
+			<tr>
+				<td><label>Descuento: $</label>  <label id="lblDescuento">0</label> </td>
+			</tr>			
+			<tr>				
+				<td> 
+					_____________________________<br>
+					<label>Total a pagar: $</label> <label id="lblGranTotal">${{$totalCompra}}</label> 
+				</td>
+			</tr>
+			
 			@if ($totalCompra > 0)
 				<tr>
 					<td>
@@ -63,8 +91,16 @@
 							 {{ csrf_field() }}						 
 							<input type="submit" class="btn btn-success btn-sm"  value="Confirmar Órden">
 							<br>
-							<label>Número de tarjeta de descuento: </label>  <input type="text" name="gift" id="gift">
-							<button class="btn btn-info btn-sm">Aplicar descuento</button>
+							<br>
+							
+								<label>Selecciona una tarjeta de descuento si eseas utilizarala en esta compra. </label>  
+								<select name="gift" id="gift" class="form-control" oninput="aplicarDescuento()">
+									<option value="0">Selecciona un descuento</option>
+									@foreach($gifts as $gift)
+										<option value="{{$gift->id}}">Tarjeta de regalo #{{$gift->id}}: {{$gift->discount*100}} % de descuento</option>
+									@endforeach
+								</select>								
+							
 						</form>                                        
 					</td>
 				</tr>                                

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category;
 use App\Order;
+use App\Gift;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -143,12 +144,15 @@ class ProductsController extends Controller
 			$totalCompra = 0;
 			foreach($products as $product)
 				$totalCompra += $product->price * $cantidades[$product->id];
+				
+			$gifts = Auth::user()->gifts()->doesntHave('orders')->get();			
 			
 			return view('products.shopping_cart', 
 				[
 					'products' => $products,
 					'cantidades' => $cantidades,
 					'totalCompra' => $totalCompra,
+					'gifts' => $gifts,
 				]);
 		}
 		return view('products.shopping_cart', 
@@ -156,6 +160,7 @@ class ProductsController extends Controller
 					'products' => [],
 					'cantidades' => [],
 					'totalCompra' => 0,
+					'gifts' => [],
 				]);
 	}
 	
@@ -188,6 +193,9 @@ class ProductsController extends Controller
 		foreach($products as $product){
 			$order->products()->attach($product, ['amount' => $cantidades[$product->id]]);			
 		}		
+		if ($request->input('gift') != 0){
+			$order->gifts()->attach(Gift::find($request->input('gift')));
+		}
 		return redirect()->route('questions_index');
 	}
 }
