@@ -188,6 +188,6 @@ class ProductsController extends Controller
 		foreach($products as $product){
 			$order->products()->attach($product, ['amount' => $cantidades[$product->id]]);			
 		}		
-		return redirect()->route('products_shopping_cart');
+		return redirect()->route('questions_index');
 	}
 }

@@ -5,15 +5,27 @@
 
 @section('content')
 <script>
-	function evaluar(question_id){
-		$.ajax({
+	function evaluar(question_id, score){
+		$("#btnScore" + score + "-" + question_id).prop("disabled", true);
+		$("#btnScore" + score + "-" + question_id).siblings().remove();
+		let redirigir = false;
+		if($(".btnScore:enabled" ).length == 0){
+			$("#labelGracias").show();
+			$("#tablaPreguntas").hide();
+		}
+		
+		$.ajax({			
 			url: "{{ route('answers_store') }}",
-			data: "answer=" + $("#opcionScore" + question_id).val() + "&" + "question="+question_id,
+			//data: "answer=" + $("#opcionScore" + question_id).val() + "&" + "question="+question_id,
+			data: "answer=" + score + "&" + "question="+question_id + "&redirigir=" + redirigir,
 			beforeSend: function(){
 				//alert($("#opcionScore").val());
+				//alert("#btnScore" + score + "-" + question_id);
+				
 			},
 			success: function (response) {
-				alert('funciono')
+				
+					
 			},
 			error: function(){
 				alert('error')
@@ -24,9 +36,9 @@
 <div class="panel panel-primary">                                
 
 	<div class="panel-heading">    
-		@if (!Auth::user()->is_admin)	
-			<h2> Encuesta</h2>
-			<h4>Ayudanos a Mejorar nuestro sitio WEB</h4>
+		@if (!Auth::user()->is_admin)				
+			<h4>Ayúdanos a mejorar nuestro servicio</h4>
+			<p>Tu opinión es muy impotante</p>
 		@endif	
 		@if (Auth::user()->is_admin)	
 			<h2> Preguntas para encuestas</h2>
@@ -34,12 +46,12 @@
 	</div>
 	<div class="panel-body">
 		
-		<table class="table table-striped">
+		<table class="table table-striped" id="tablaPreguntas">
 			@foreach ($questions as $question)
 												   
-				<tr>
+				<tr id="td{{$question->id}}">
 					<td >						
-						{{ $question->question }}						
+						<label>{{ $question->question }}</label>
 					</td>											
 					
 					
@@ -52,29 +64,30 @@
 					</td>
 					@endif	
 					@if (!Auth::user()->is_admin)
-						<td width="10%">
-						<!-- AQUI -->
-						<!--<form clas="form form-inline" method="post" action="{{ route('answers_store')}}" > -->
-							<select id="opcionScore{{$question->id}}" name="rating">
-								<option value="">Select a rating</option>
-								<option value="5">Excellent</option>
-								<option value="4">Very Good</option>
-								<option value="3">Average</option>
-								<option value="2">Poor</option>
-								<option value="1">Terrible</option>
-							</select>	
-											
-							<button  class="btn btn-success btn-sm" onclick="evaluar({{$question->id}})">
-								Enviar
+						<td>
+							<button id="btnScore1-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 1)">
+								<img src="{{asset('images/1.png')}}" width="48" height="48">
 							</button>
-						
-						<!-- </form>  -->
+							<button id="btnScore2-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 2)">
+								<img src="{{asset('images/2.png')}}" width="48" height="48">
+							</button>
+							<button id="btnScore3-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 3)">
+								<img src="{{asset('images/3.png')}}" width="48" height="48">
+							</button>
+							<button id="btnScore4-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 4)">
+								<img src="{{asset('images/4.png')}}" width="48" height="48">
+							</button>
+							<button id="btnScore5-{{$question->id}}" class="btn btn-sm btn-default btnScore" onclick="evaluar({{$question->id}}, 5)">
+								<img src="{{asset('images/5.png')}}" width="48" height="48">
+							</button>
 						</td>
 					@endif	
 				</tr>
 										
 			@endforeach                            
 		</table>
+		
+		<label id="labelGracias" hidden="true">Gracias por sus respuestas! </label>
 		
 		<table>
 			<tr>

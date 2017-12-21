@@ -57,5 +57,11 @@ Route::middleware('auth')->group(function(){
 	Route::post('/my-shopping-cart/confirm', 'ProductsController@createOrder')->name('products_create_order');
 	Route::get('/my-shopping-cart/', 'ProductsController@shoppingCart')->name('products_shopping_cart');
 	
-
+	Route::get('/orders/view/{order}', 'OrdersController@view')->name('orders_view');
+	Route::post('/orders/return/{order}/{product}', 'OrdersController@return')->name('orders_return');
+	Route::post('/orders/dispatch/{order}', 'OrdersController@despachar')->name('orders_dispatch');
+	Route::get('/orders', 'OrdersController@index')->name('orders_index');
+	
+	Route::get('/clients', 'ClientsController@index')->name('clients_index');
+	
 });	

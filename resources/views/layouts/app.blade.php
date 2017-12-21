@@ -115,6 +115,16 @@
 								</a>
 							</li>
 							
+							<li class="list-group-item list-group-item-info">
+								<a href="{{route('orders_index')}}"> 									
+									<h4> 
+										<span class="glyphicon glyphicon-list"></span> 
+										Órdenes
+									</h4>
+									
+								</a>
+							</li>
+							
 							@if (!Auth::user()->is_admin)
 								<li class="list-group-item list-group-item-info">
 									<h4>
@@ -172,6 +182,16 @@
 										<h4> 
 											<span class="glyphicon glyphicon-stats"></span> 
 											Reportes
+										</h4>
+										
+									</a>
+								</li>
+								
+								<li class="list-group-item list-group-item-info">
+									<a href="{{route('clients_index')}}"> 									
+										<h4> 
+											<span class="glyphicon glyphicon-gift"></span> 
+											Enviar regalos
 										</h4>
 										
 									</a>
