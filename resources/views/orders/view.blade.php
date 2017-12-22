@@ -50,14 +50,40 @@
 									<form class="form form-inline" method="post" action="{{ route('orders_return', ['product' => $product->id, 'order' => $order->id]) }}" >
 										 {{ csrf_field() }}
 										<input type="submit" class="btn btn-danger btn-sm"  value="Devolver">
+										<select id="reason" name="reason">
+											@foreach($reasons as $_reason)
+												<option value="{{$_reason->id}}" 
+													@isset($reason)
+														@if ($reason->id == $_reason->id))
+															selected="selected"
+														@endif
+													@endisset
+												>
+													{{$_reason->description}}
+												</option>
+											@endforeach
+										</select>
 									</form>                                        
 								</td>
 							@endif
 						@empty
-							<td width="10%">
+							<td>
 									<form class="form form-inline" method="post" action="{{ route('orders_return', ['product' => $product->id, 'order' => $order->id]) }}" >
 										 {{ csrf_field() }}
 										<input type="submit" class="btn btn-danger btn-sm"  value="Devolver">
+										<select id="reason" name="reason">
+											@foreach($reasons as $_reason)
+												<option value="{{$_reason->id}}" 
+													@isset($reason)
+														@if ($reason->id == $_reason->id))
+															selected="selected"
+														@endif
+													@endisset
+												>
+													{{$_reason->description}}
+												</option>
+											@endforeach
+										</select>
 									</form>                                        
 								</td>
 						@endforelse

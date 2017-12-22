@@ -94,8 +94,13 @@
 							<li class="list-group-item list-group-item-info">
 								<img src="{{ asset('images/logo-tienda.png') }}" alt="fiusac" style="opacity:0.9;" width="240" heigth="175">
 							</li>
-
-						
+							
+							@if (Auth::user()->gifts()->doesntHave('orders')->get()->count() > 0)
+								<li class="list-group-item list-group-item-info">
+								<span class="badge" id="carritoSize">{{Auth::user()->gifts()->doesntHave('orders')->get()->count()}}</span>
+								Tienes regalos por tu preferencia
+							</li>
+							@endif
 							<li class="list-group-item list-group-item-info">
 								<a href="{{route('home')}}"> 									
 									<h4> 

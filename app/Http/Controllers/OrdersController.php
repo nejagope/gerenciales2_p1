@@ -21,7 +21,8 @@ class OrdersController extends Controller
 	
 	 public function view(Request $request){		 
 		$order = Order::with('products')->with('gifts')->with('devolutions')->find($request->order);
-		
+		$reasons = Reason::all();
+		//dd($reasons);
 		$products = $order->products;
 		$totalCompra = 0;
 		foreach ($products as $product)
@@ -36,7 +37,8 @@ class OrdersController extends Controller
 		$params = ['products' => $products, 
 			'totalCompra' => $totalCompra,
 			'order' => $order,
-			'discount' => 0];
+			'discount' => 0,
+			'reasons' => $reasons];
 			
 		$gift = $order->gifts->first();
 		if ($gift){
@@ -45,11 +47,11 @@ class OrdersController extends Controller
 		return view('orders.view', $params);
 	}
 	
-	public function return(Request $request){
+	public function return(Request $request){		
 		$devulution = new Devolution;
 		$devulution->order_id = $request->order;
 		$devulution->product_id = $request->product;
-		//$devulution->reason_id = $request->reason;
+		$devulution->reason_id = $request->input('reason');
 		$devulution->save();
 				
 		return redirect()->route('orders_view', ['order' => $request->order]);

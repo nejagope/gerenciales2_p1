@@ -45,6 +45,7 @@
 			  drawChartProductsOrderedDevolutions();
 			  drawChartTop10Products();
 			  drawChartAnswers();
+			  drawChartReasons() ;
 		  }
 
 		  function drawChartAmountsByCategory() {
@@ -218,6 +219,34 @@
 
 			chart.draw(data, options);
 		  }
+		  
+		  
+		  function drawChartReasons() {
+
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Motivo de devolucion');
+			data.addColumn('number', 'Total devoluciones');
+			data.addRows([			  
+			  @foreach($devolutions_reasons as $reason)
+					['{{$reason->reason}}' , {{$reason->total}}],
+			  @endforeach
+			]);
+			
+			var options = {
+			    title: 'Devoluciones por motivo',	
+				hAxis:{
+					title: 'Motivo'
+				},
+				vAxis:{
+					title: 'Total devoluciones',
+					
+				}
+			};
+			
+			var chart = new google.visualization.ColumnChart(document.getElementById('chartReasons'));
+
+			chart.draw(data, options);
+		  }
 		</script>
 		
 		<div id="amountsCategories" style="width: 100%; height: 500px;"></div>
@@ -227,8 +256,9 @@
 		<h3 class="text-center">Top 10 productos vendidos</h3>
 		<div id="chartTop10Products" style="width: 100%; height: 500px;" class="text-center"></div>
 		<div id="chartAnswers" style="width: 100%; height: 500px;"></div>
+		<div id="chartReasons" style="width: 100%; height: 500px;"></div>
 		<div>
-		
+			<label>Total pérdidas por devoluciones = $ {{$total_monto_devuelto}}</label>
 		</div>
 		
 	</div>

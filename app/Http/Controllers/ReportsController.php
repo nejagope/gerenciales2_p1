@@ -55,6 +55,12 @@ class ReportsController extends Controller
 		$total_devoluciones = DB::table('orders')
 							->join('devolutions', 'orders.id', '=', 'devolutions.order_id');
 							
+		//devoluciones por motivo
+		$total_devoluciones_reason = DB::table('devolutions')
+							->join('reasons', 'reasons.id', '=', 'devolutions.reason_id')										
+							->groupBy('reasons.description')													
+							->select(DB::raw('reasons.description as reason'),DB::raw('count(*) as total'));
+							
 				//total de productos ordenados por categoría
 		$top10_productos = DB::table('orders')
 					->join('order_product', 'orders.id', '=', 'order_product.order_id')
@@ -69,6 +75,16 @@ class ReportsController extends Controller
 						->join('questions', 'questions.id', '=', 'answers.question_id')
 						->groupBy('questions.question')
 						->select(DB::raw('questions.question as question'), DB::raw('coalesce(avg(answers.score),0) as score'));
+						
+						
+		//total monto devuelto
+		$total_monto_devuelto = DB::table('devolutions')					
+					->join('orders', 'orders.id', '=', 'devolutions.order_id')	
+					->join('order_product', 'order_product.order_id', '=', 'orders.id')																							
+					->join('products', 'devolutions.product_id', '=', 'products.id')																							
+					
+					->select(DB::raw('sum(products.price * order_product.amount) as total'))
+					;
 							
 		//aplicación de filtro de año a consultas en caso de que viniera el año  como parámetro en el request
 		if ($request->year){
@@ -89,6 +105,10 @@ class ReportsController extends Controller
 			$top10_productos = $top10_productos->whereBetween('orders.created_at', [$request->year. '-01-01', $request->year . '-12-31']);
 			
 			$answers = $answers->whereBetween('answers.created_at', [$request->year. '-01-01', $request->year . '-12-31']);
+			
+			$total_monto_devuelto= $total_monto_devuelto->whereBetween('devolutions.created_at', [$request->year. '-01-01', $request->year . '-12-31']);
+			
+			$total_devoluciones_reason = $total_devoluciones_reason->whereBetween('devolutions.created_at', [$request->year. '-01-01', $request->year . '-12-31']);
 		}
 		
 		
@@ -103,7 +123,10 @@ class ReportsController extends Controller
 		$total_orders = $total_orders->count();
 		$total_envios = $total_envios->count();
 		$total_devoluciones = $total_devoluciones->count();
+		$total_monto_devuelto = $total_monto_devuelto->get();
+		$total_devoluciones_reason = $total_devoluciones_reason->get();
 		
+			
 		$parametros = [
 			'years' => $years,
 			'amounts_orders' => $amounts_orders,
@@ -115,6 +138,8 @@ class ReportsController extends Controller
 			'devolutions' => $productos_devueltos,
 			'top10_products' => $top10_productos,
 			'answers' => $answers,
+			'total_monto_devuelto' => $total_monto_devuelto[0]->total,
+			'devolutions_reasons' => $total_devoluciones_reason,
 		];
         return view('reports.index', $parametros);
     }
